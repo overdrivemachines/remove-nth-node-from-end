@@ -25,3 +25,13 @@ The number of nodes in the list is sz.
 1 <= n <= sz
 
 Follow up: Could you do this in one pass?
+
+# Solution
+
+1. Reverse the linked list
+2. Find the nth node and its previous node
+3. Point the previous node to the nth's next node
+4. Reverse the linked list again
+
+Runtime: 7 ms Beats 41.54%
+Memory: 10.6 MB Beats 79.90%
