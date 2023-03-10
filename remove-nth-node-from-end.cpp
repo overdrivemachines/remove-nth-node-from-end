@@ -35,7 +35,14 @@ void printLinkedList(ListNode* head) {
   cout << "NULL\n";
 }
 
-ListNode* removeNthFromEnd(ListNode* head, int n) {
+// Method 1:
+// 1. Reverse the linked list
+// 2. Find the nth node and its previous node
+// 3. Point the previous node to the nth's next node
+// 4. Reverse the linked list again
+// Runtime: 7 ms Beats 41.54%
+// Memory: 10.6 MB Beats 79.90%
+ListNode* removeNthFromEnd1(ListNode* head, int n) {
   ListNode* prev = nullptr;
   ListNode* cur = head;
   ListNode* next;
@@ -89,12 +96,63 @@ ListNode* removeNthFromEnd(ListNode* head, int n) {
   return head;
 }
 
+// Method 2: 2 Pointers
+// 1. left = 1st node. right = nth node.
+// 2. move both left and right down the list until right->next is NULL
+// 3. left will point to the node we want to remove
+// Runtime: 3 ms Beats 83.85%
+// Memory: 10.6 MB Beats 79.90%
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+  if ((head == nullptr) || (n <= 0))
+    return head;
+
+  if ((n == 1) && (head->next == nullptr))
+    return nullptr;
+
+  ListNode* left = head;
+  // ListNode* cur = head;
+  ListNode* right = head;
+  int i = 0;
+
+  // assign the right node to be nth node from the start
+  for (i = 0; ((i < n) && (right->next)); i++) {
+    right = right->next;
+  }
+
+  // cout << "Left: " << left->val << " Right: " << right->val << " i: " << i << " n: " << n << endl;
+
+  if (i != n) {
+    // remove the head
+    return head->next;
+  }
+
+  // now move the left pointer down the link list until the right's next is null
+  while (right->next != nullptr) {
+    left = left->next;
+    right = right->next;
+  }
+  // cout << "Left: " << left->val << " Right: " << right->val << endl;
+  // left->next points to the nth node from the end of the list
+  if (left->next != nullptr)
+    left->next = left->next->next;  // removing the nth node from the end of the list
+  return head;
+}
+
 int main(int argc, char const* argv[]) {
   // ListNode* list = createLinkedList({1, 2, 3, 4, 5});
   // int n = 2;
 
-  ListNode* list = createLinkedList({1, 2});
-  int n = 1;
+  // ListNode* list = createLinkedList({1, 2, 3});
+  // int n = 2;  // expected: [1, 3]
+
+  // ListNode* list = createLinkedList({1, 2});
+  // int n = 1;  // expected: [1]
+
+  // ListNode* list = createLinkedList({1, 2});
+  // int n = 2;  // expected: [2]
+
+  ListNode* list = createLinkedList({1, 2, 3});
+  int n = 3;  // expected:
   printLinkedList(list);
   printLinkedList(removeNthFromEnd(list, n));
   return 0;

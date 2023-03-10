@@ -28,10 +28,21 @@ Follow up: Could you do this in one pass?
 
 # Solution
 
+Method 1:
+
 1. Reverse the linked list
 2. Find the nth node and its previous node
 3. Point the previous node to the nth's next node
 4. Reverse the linked list again
 
 Runtime: 7 ms Beats 41.54%
+Memory: 10.6 MB Beats 79.90%
+
+Method 2: 2 Pointers
+
+1. left = 1st node. right = nth node.
+2. move both left and right down the list until right->next is NULL
+3. left will point to the node we want to remove
+
+Runtime: 3 ms Beats 83.85%
 Memory: 10.6 MB Beats 79.90%
